@@ -12,7 +12,7 @@ ARG S6_ARCH="amd64"
 ARG S6_URL="https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz"
 ARG GITWATCH_URL="https://raw.githubusercontent.com/gitwatch/gitwatch/master/gitwatch.sh"
 ARG BASE_PACKAGES="bash ca-certificates gettext shadow tzdata coreutils"
-ARG EXTRA_PACKAGES="git inotify-tools"
+ARG EXTRA_PACKAGES="git inotify-tools openssh-client"
 
 ENV PUID=1001 \
     PGID=911
@@ -27,18 +27,18 @@ ENV CHANGE_WAIT_SECS=10 \
 ENV GIT_NAME="Automatic Script" \
 		GIT_EMAIL="auto@auto.com"
 
-VOLUME ["/watchdir"]
+VOLUME ["/watchdir","/root","/root/.ssh"]
 
 RUN echo "Installing Packages" \
  && apk update \
  && apk add --no-cache \
       $BASE_PACKAGES \
 			$EXTRA_PACKAGES \
- && mkdir -p "/root" "/tmp" "/usr/local/share" "/usr/local/bin"
+ && mkdir -p "/tmp" "/usr/local/share" "/usr/local/bin"
 
 RUN echo "Setting Up Users" \
  && groupmod -g 1000 users \
- && useradd -u 911 -U -d /root -s /bin/false abc \
+ && useradd -u $PUID -U -d /root -s /bin/false abc \
  && usermod -G users abc
 
 ADD "$GITWATCH_URL" /usr/local/bin/gitwatch
