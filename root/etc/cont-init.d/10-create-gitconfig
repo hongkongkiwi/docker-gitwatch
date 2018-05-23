@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+envsubst < "/usr/local/share/gitconfig.template" > "/root/.gitconfig"

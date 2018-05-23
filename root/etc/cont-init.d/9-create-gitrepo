@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+bash -c "[ -d "${DIR_TO_WATCH}/.git" ] || { mkdir -p "$DIR_TO_WATCH" && cd "$DIR_TO_WATCH" && git init; }"
