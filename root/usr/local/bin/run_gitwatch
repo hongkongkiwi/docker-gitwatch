@@ -1,0 +1,14 @@
+#!/bin/bash
+
+OPTS=()
+[ "$CHANGE_WAIT_SECS" == "" ] || OPTS+=(-s "$CHANGE_WAIT_SECS")
+[ "$DATE_FORMAT" == "" ] || OPTS+=(-d "$DATE_FORMAT")
+[ "$REMOTE_REPO" == "" ] || OPTS+=(-r "$REMOTE_REPO")
+[ "$REMOTE_BRANCH" == "" ] || OPTS+=(-b "$REMOTE_BRANCH")
+[ "$GIT_COMMIT_MSG" == "" ] || OPTS+=(-m "$GIT_COMMIT_MSG")
+OPTS+=("$DIR_TO_WATCH")
+[ -d "$DIR_TO_WATCH" ] || { echo "Directory to watch "$DIR_TO_WATCH" does not exist!"; exit 1; }
+[ -f "/usr/local/bin/gitwatch" ] || { echo "Gitwatch bin "/usr/local/bin/gitwatch" does not exist!"; exit 1; }
+
+echo "Running Gitwatch on $DIR_TO_WATCH"
+"/usr/local/bin/gitwatch" "${OPTS[@]}"

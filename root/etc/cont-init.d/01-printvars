@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+printf "         GITWATCH SETTINGS\n"
+printf "========================================\n"
+printf "CHANGE_WAIT_SECS: %s\n" "$CHANGE_WAIT_SECS"
+printf "DATE_FORMAT:      %s\n" "$DATE_FORMAT" 
+printf "REMOTE_REPO:      %s\n" "$REMOTE_REPO"
+printf "GIT_COMMIT_MSG:   %s\n" "$GIT_COMMIT_MSG"
+printf "DIR_TO_WATCH:     %s\n" "$DIR_TO_WATCH"
