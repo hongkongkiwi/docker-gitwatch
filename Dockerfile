@@ -34,7 +34,11 @@ RUN echo "Installing Packages" \
  && apk add --no-cache \
       $BASE_PACKAGES \
 			$EXTRA_PACKAGES \
- && mkdir -p "/tmp" "/usr/local/share" "/usr/local/bin"
+ && mkdir -p "/tmp" \
+ && mkdir -p "/usr/local/share" \
+ && mkdir -p "/usr/local/bin" \
+ && mkdir -p "/root/.config" \
+ && mkdir -p "/root/.config/git"
 
 RUN echo "Setting Up Users" \
  && groupmod -g 1000 users \

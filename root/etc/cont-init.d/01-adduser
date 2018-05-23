@@ -16,3 +16,5 @@ User gid:    $(id -g abc)
 -------------------------------------
 "
 chown abc:abc "$DIR_TO_WATCH"
+mkdir -p "/root/.config"
+chown -R abc:abc "/root/.config"
