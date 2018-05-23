@@ -27,7 +27,7 @@ ENV CHANGE_WAIT_SECS=10 \
 ENV GIT_NAME="Automatic Script" \
 		GIT_EMAIL="auto@auto.com"
 
-VOLUME ["/watchdir","/root","/root/.ssh"]
+VOLUME ["/watchdir"]
 
 RUN echo "Installing Packages" \
  && apk update \
@@ -37,7 +37,6 @@ RUN echo "Installing Packages" \
  && mkdir -p "/tmp" \
  && mkdir -p "/usr/local/share" \
  && mkdir -p "/usr/local/bin" \
- && mkdir -p "/root/.config" \
  && mkdir -p "/root/.config/git"
 
 RUN echo "Setting Up Users" \
