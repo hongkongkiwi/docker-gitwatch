@@ -11,7 +11,11 @@ ARG S6_VERSION="1.21.4.0"
 ARG S6_ARCH="amd64"
 ARG S6_URL="https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz"
 ARG GITWATCH_URL="https://raw.githubusercontent.com/gitwatch/gitwatch/master/gitwatch.sh"
-ARG PACKAGES="bash git ca-certificates inotify-tools gettext"
+ARG BASE_PACKAGES="bash ca-certificates gettext shadow tzdata coreutils"
+ARG EXTRA_PACKAGES="git inotify-tools"
+
+ENV PUID=1001 \
+    PGID=911
 
 ENV CHANGE_WAIT_SECS=10 \
     DATE_FORMAT="+%Y-%m-%d %H:%M:%S" \
@@ -28,8 +32,14 @@ VOLUME ["/watchdir"]
 RUN echo "Installing Packages" \
  && apk update \
  && apk add --no-cache \
-      $PACKAGES \
+      $BASE_PACKAGES \
+			$EXTRA_PACKAGES \
  && mkdir -p "/root" "/tmp" "/usr/local/share" "/usr/local/bin"
+
+RUN echo "Setting Up Users" \
+ && groupmod -g 1000 users \
+ && useradd -u 911 -U -d /root -s /bin/false abc \
+ && usermod -G users abc
 
 ADD "$GITWATCH_URL" /usr/local/bin/gitwatch
 ADD "$S6_URL" /tmp/
